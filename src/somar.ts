@@ -1,4 +1,4 @@
-//Generics
+{//Generics
 const numero1 = document.querySelector<HTMLInputElement>('#num1')!
 const numero2 = document.querySelector<HTMLInputElement>('#num2')!
 const formulario = document.querySelector<HTMLFormElement>('form')!
@@ -22,3 +22,4 @@ formulario.addEventListener('submit', (event: Event) => {
         p.innerText = `Favor informar os dois numero`
     }
 })
+}
