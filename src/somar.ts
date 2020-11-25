@@ -9,16 +9,16 @@ formulario.addEventListener('submit', (event: Event) => {
 
     let p = document.querySelector<HTMLParagraphElement>('#mensagem')
 
-    if (!p){
+    if (!p) {
         p = document.createElement('p')
         p.id = 'mensagem'
         formulario.append(p)
     }
 
-    if (numero1.value && numero2.value){
+    if (numero1.value && numero2.value) {
         let soma = Number(numero1.value) + Number(numero2.value)
         p.innerText = `A soma dos numeros é de ${soma}`
-    }else {
+    } else {
         p.innerText = `Favor informar os dois numero`
     }
 })
