@@ -1,7 +1,7 @@
 namespace Escola {
     export enum Sexo {
         Masculino = 'm',
-        Feminino = 'f'
+        Feminino = ''
     }
 
     export class Pessoa {

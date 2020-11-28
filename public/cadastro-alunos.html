@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos - Exemplos com TypScript</title>
+</head>
+<body>
+    <svg id="loading" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(255, 255, 255); display: none; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" r="0" fill="none" stroke="#e90c59" stroke-width="2">
+          <animate attributeName="r" repeatCount="indefinite" dur="1s" values="0;40" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline" begin="-0.5s"></animate>
+          <animate attributeName="opacity" repeatCount="indefinite" dur="1s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline" begin="-0.5s"></animate>
+        </circle>
+        <circle cx="50" cy="50" r="0" fill="none" stroke="#46dff0" stroke-width="2">
+          <animate attributeName="r" repeatCount="indefinite" dur="1s" values="0;40" keyTimes="0;1" keySplines="0 0.2 0.8 1" calcMode="spline"></animate>
+          <animate attributeName="opacity" repeatCount="indefinite" dur="1s" values="1;0" keyTimes="0;1" keySplines="0.2 0 0.8 1" calcMode="spline"></animate>
+        </circle>
+        </svg>
+    <form>
+        <input id="number" placeholder="Numero de Ra" >
+        <input id="name" placeholder="Nome do Aluno">
+        <select id="gender">
+            <option value="">Selecione o sexo</option>
+            <option value="f">Feminino</option>
+            <option value="m">Masculino</option>
+        </select>
+        <input id="course" placeholder="Nome do curso" >
+
+        <button>Salvar</button>
+    </form>
+
+    <p id="message"></p>
+
+    <script type="module" src="./entities/Person.js"></script>
+    <script type="module" src="./entities/Student.js"></script>
+    <script type="module" src="cadastro-alunos.js"></script>
+</body>
+</html>
