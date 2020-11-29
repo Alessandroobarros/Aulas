@@ -2,7 +2,7 @@ import Gender from "./Gender.js"
 import Person from "./Person.js"
 
 export class Student extends Person {
-    #ra: number
+    private _ra: number
     course: string
 
     constructor(ra: number, name: string, gender: Gender, course: string) {
@@ -20,7 +20,7 @@ export class Student extends Person {
         }
         
         if (ra == 1234 || ra == 5678 || ra == 9012) {
-            this.#ra = ra
+            this._ra = ra
         } else {
             throw new Error('Formato de RA invalido')
         }
@@ -29,16 +29,16 @@ export class Student extends Person {
 
     //Acessors 
     get ra() {
-        return this.#ra
+        return this._ra
     }
 
-    set ra(value: number) {
-        if (value == 1234 || value == 5678 || value == 9012) {
-            this.#ra = value
-        } else {
-            throw new Error('Formato invalido')
-        }
-    }
+    // set ra(value: number) {
+    //     if (value == 1234 || value == 5678 || value == 9012) {
+    //         this.#ra = value
+    //     } else {
+    //         throw new Error('Formato invalido')
+    //     }
+    // }
 
 }
 
