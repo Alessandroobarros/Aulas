@@ -54,10 +54,10 @@
             return
         }
 
-        if (!nascimento.value){
-            resposta.innerText = 'O campo nascimento é obrigatório'
+        if (!sexo.value){
+            resposta.innerText = 'O campo sexo é obrigatório'
             resposta.className = 'negative'
-            nascimento.focus()
+            sexo.focus()
             return
         }
 
