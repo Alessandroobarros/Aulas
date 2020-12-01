@@ -1,18 +1,20 @@
-import Gender from "./Gender.js"
+import Log from '../decorators/Log.js'
+import Gender from './Gender.js'
 
-export class Person {
-    name: string
-    gender: Gender
+@Log('Test')
+export class Person implements IShowYourself {
+  public name: string
+  public gender: Gender
 
-    constructor(name: string, gender: Gender){
-        this.name = name
-        this.gender = gender
-    }
+  constructor (name: string, gender: Gender) {
+    this.name = name
+    this.gender = gender
+  }
 
-    apresentarSe () {
-        const article = this.gender === Gender.Male ? 'o' : 'a'
-        return `Olá, eu sou ${article} ${this.name}`
-    }
+  public showYourself () {
+    const article = this.gender === Gender.Male ? 'o' : 'a'
+    return `Olá, eu sou ${article} ${this.name}.`
+  }
 }
 
 export default Person

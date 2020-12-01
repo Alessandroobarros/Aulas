@@ -3,26 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Alunos - Exemplos com TypeScript</title>
+  <title>Cadastro de Professores - Exemplos com TypeScript</title>
   <link rel="stylesheet" href="base.css">
 </head>
 <body>
   <header>
-    <h1>Cadastro de Alunos</h1>
+    <h1>Cadastro de Professores</h1>
     <p>
-      Preencha os dados desejados de cada aluno para cadastrar.
+      Preencha os dados desejados de cada professor para cadastrar.
     </p>
   </header>
 
   <form novalidate>
-    <input id="number" placeholder="Número de RA">
-    <input id="name" placeholder="Nome do aluno" autocomplete="name">
-    <select id="gender" required>
+    <input id="name" placeholder="Nome do professor" autocomplete="name" data-message="Por favor, preencha o nome!">
+    <select id="gender" required data-message="Quero saber seu sexo!">
       <option value="">Selecione o sexo</option>
       <option value="f">Feminino</option>
       <option value="m">Masculino</option>
     </select>
-    <input id="course" placeholder="Nome do curso">
+    <select id="degree" required data-message="Sem titulação, tá fora...">
+      <option value="">Selecione a titulação</option>
+      <option value="gradueted">Graduado</option>
+      <option value="master">Mestrado</option>
+      <option value="doctor">Doutorado</option>
+    </select>
 
     <button>Salvar</button>
   </form>
@@ -37,6 +41,6 @@
 
   <table></table>
 
-  <script src="cadastro-alunos.js" type="module"></script>
+  <script src="cadastro-professores.js" type="module"></script>
 </body>
 </html>

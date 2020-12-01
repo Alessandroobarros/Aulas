@@ -1,112 +1,120 @@
-{
-    const nome = document.querySelector<HTMLInputElement>('#nome')!
-    const email = document.querySelector<HTMLInputElement>('#email')!
-    const nascimento = document.querySelector<HTMLInputElement>('#nascimento')!
-    const sexo = document.querySelector<HTMLSelectElement>('#sexo')!
-    const termosAceitos = document.querySelector<HTMLInputElement>('#termosAceitos')!
-    const formulario = document.querySelector<HTMLFormElement>('form')!
-    const resposta = document.querySelector<HTMLDivElement>('#resposta')!
+import { createDatePicker } from './DatePicker.js'
 
-    formulario.noValidate = true
+const nome = document.querySelector<HTMLInputElement>('#nome')!
+const email = document.querySelector<HTMLInputElement>('#email')!
+const nascimento = createDatePicker('#nascimento')!
+const sexo = document.querySelector<HTMLSelectElement>('#sexo')!
+const termosAceitos = document.querySelector<HTMLInputElement>('#termosAceitos')!
+const formulario = document.querySelector<HTMLFormElement>('form')!
+const resposta = document.querySelector<HTMLDivElement>('#resposta')!
 
-    formulario.addEventListener('submit', (e: Event) =>{
-        e.preventDefault()
+nome.focus()
 
-        let valorNome = nome.value.trim()
+formulario.addEventListener('submit', (e: Event) => {
+  e.preventDefault()
 
-        if (!valorNome){
-            resposta.innerText = 'O campo nome é obrigatório'
-            resposta.className = 'negative'
-            nome.focus()
-            return
-        }
+  nome.className = email.className = nascimento.className = sexo.className = ''
 
-        const regexNome = /\w+\s\w/g
+  const valorNome = nome.value.trim()
 
-        
-        if (!regexNome.test(valorNome)){
-            resposta.innerText = 'Informe seu nome completo !'
-            resposta.className = 'negative'
-            nome.focus()
-            return
-        }
+  if (!valorNome) {
+    resposta.innerText = 'O campo Nome é obrigatório!'
+    resposta.className = 'negative'
+    nome.className = 'negative'
+    nome.focus()
+    return
+  }
 
-        if (!email.value){
-            resposta.innerText = 'O campo e-mail é obrigatório'
-            resposta.className = 'negative'
-            email.focus()
-            return
-        }
+  const regexNome = /\w+\s\w+/g
 
-        const regexEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
+  if (!regexNome.test(valorNome)) {
+    resposta.innerText = 'Informe seu nome completo!'
+    resposta.className = 'negative'
+    nome.className = 'negative'
+    nome.focus()
+    return
+  }
 
-        if(!regexEmail.test(email.value)){
-            resposta.innerText = 'Formato de e-mail invalido'
-            resposta.className = 'negative'
-            email.focus()
-            return
-        }
+  if (!email.value) {
+    resposta.innerText = 'O campo E-mail é obrigatório!'
+    resposta.className = 'negative'
+    email.className = 'negative'
+    email.focus()
+    return
+  }
 
-        if (!nascimento.value){
-            resposta.innerText = 'O campo nascimento é obrigatório'
-            resposta.className = 'negative'
-            nascimento.focus()
-            return
-        }
+  const regexEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
 
-        if (!sexo.value){
-            resposta.innerText = 'O campo sexo é obrigatório'
-            resposta.className = 'negative'
-            sexo.focus()
-            return
-        }
+  if (!regexEmail.test(email.value)) {
+    resposta.innerText = 'Formato de E-mail inválido!'
+    resposta.className = 'negative'
+    email.className = 'negative'
+    email.focus()
+    return
+  }
 
-        const dataNascimento = new Date(`${nascimento.value}T00:00:00`)
+  if (!nascimento.value) {
+    resposta.innerText = 'O campo Nascimento é obrigatório!'
+    resposta.className = 'negative'
+    nascimento.className = 'negative'
+    nascimento.focus()
+    return
+  }
 
-        if (Date.now() - Number(dataNascimento) <= 0){
-            resposta.innerText = 'A data de nascimento tem quer ser anterior a data atual !'
-            resposta.className = 'negative'
-            sexo.focus()
-            return
-        }
+  const dataNascimento = new Date(`${nascimento.value}T00:00:00`)
+  console.log(nascimento.value)
 
-        if (!termosAceitos.checked){
-            resposta.innerText = 'É necessario aceitar os termos antes de prosseguir'
-            resposta.className = 'negative'
-            termosAceitos.focus()
-            return
-        }
+  if (Date.now() - Number(dataNascimento) < 0) {
+    resposta.innerText = 'O nascimento deve ter ocorrido no passado!'
+    resposta.className = 'negative'
+    nascimento.className = 'negative'
+    nascimento.focus()
+    return
+  }
 
-        
-        resposta.innerText = '!!'
-        resposta.className = 'positive'
+  if (!sexo.value) {
+    resposta.innerText = 'O campo Sexo é obrigatório!'
+    resposta.className = 'negative'
+    sexo.className = 'negative'
+    sexo.focus()
+    return
+  }
 
-        resposta.innerHTML = `<p>Olá, ${valorNome}. Apresente estes documentos: </p>`
-        resposta.innerHTML += `<ul>`
-        resposta.innerHTML += `<li>Documento pessoal com foto (RG, CNH)</li>`
+  if (!termosAceitos.checked) {
+    resposta.innerText = 'É preciso aceitar os termos antes de prosseguir.'
+    resposta.className = 'negative'
+    termosAceitos.focus()
+    return
+  }
 
-        if(sexo.value === "m"){
-            resposta.innerHTML += `<li>Documento de obrigações militares (reservista ou dispença)</li>`
-        }
+  resposta.innerText = ''
+  resposta.className = 'positive'
 
-        const hoje = new Date()
-        let idade = hoje.getFullYear() - dataNascimento.getFullYear()
-        
-        if(hoje.getMonth() > dataNascimento.getMonth()){
-            idade--
-        }else if (hoje.getMonth() == dataNascimento.getMonth()){
-            if(dataNascimento.getDate() > hoje.getDate()){
-                idade--
-            }
-        }
+  let resultado = `<p>Olá, ${valorNome}. Apresente estes documentos:</p>`
 
-        if (idade > 15 && idade < 18 || idade > 69){
-            resposta.innerHTML += `<li>Opcionalmente Titulo de eleitor</li>`
-        }else if (idade > 17 && idade < 70){
-            resposta.innerHTML += `<li>Titulo eleitoral e comprovante de votação da ultima eleição</li>`
-        }
-        
-        resposta.innerHTML += `</ul>`
-    })
-    
-}
+  resultado += `<ul>`
+  resultado += `<li>Documento pessoal com foto (RG, CNH)</li>`
+
+  const hoje = new Date()
+  let idade = hoje.getFullYear() - dataNascimento.getFullYear()
+
+  if (dataNascimento.getMonth() > hoje.getMonth()) {
+    idade--
+  } else if (hoje.getMonth() == dataNascimento.getMonth()) {
+    if (dataNascimento.getDate() > hoje.getDate()) {
+      idade--
+    }
+  }
+
+  if (sexo.value === 'm' && idade > 17) {
+    resultado += `<li>Documento de cumprimento com as obrigações militares (ou certificado de dispensa)</li>`
+  }
+
+  if (idade > 15 && idade < 18 || idade > 69) {
+    resultado += `<li>Opcionalmente pode apresentar o título eleitoral</li>`
+  } else if (idade > 17 && idade < 70) {
+    resultado += `<li>Título eleitoral e comprovante de votação na última eleição</li>`
+  }
+
+  resposta.innerHTML = resultado + `</ul>`
+})

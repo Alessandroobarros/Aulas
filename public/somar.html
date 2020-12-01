@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soma de 2 numeros</title>
-    <link rel="stylesheet" href="base.css">
-    <style>
-        
-        .custom-input{
-            color: blue;
-            border: 1px solid blue;
-            background: lightblue;
-        }
-        form {
-            background: #cccccc;
-            border-radius: 12px;
-            padding: 2rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Somar 2 Números - Exemplos com TypeScript</title>
+  <link rel="stylesheet" href="base.css">
 </head>
-<body >
-    <form>
-        <input id="num1" class="custom-input" placeholder="Informe o 1ºnumero ?">
-        <input id="num2" class="custom-input" placeholder="Informe o 2ºnumero ?">
-        <button >Somar</button>
-    </form>
+<body>
+  <header>
+    <h1>Somar 2 Números</h1>
+    <p>
+      Soma os números informados, antes validando se foram corretamente informados.
+    </p>
+  </header>
 
-    <script src="somar.js"></script>
+  <form>
+    <input id="campo1" placeholder="Informe um número">
+    <input id="campo2" placeholder="Informe outro número">
+    <button>Somar</button>
+  </form>
+
+  <p id="mensagem"></p>
+
+  <script src="somar.js"></script>
 </body>
 </html>

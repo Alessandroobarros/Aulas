@@ -1,45 +1,53 @@
-import Gender from "./Gender.js"
-import Person from "./Person.js"
+import Log from '../decorators/Log.js'
+import Version from '../decorators/Version.js'
+import Gender from './Gender.js'
+import Person from './Person.js'
 
-export class Student extends Person {
-    private _ra: number
-    course: string
+@Log('Test')
+@Version<Student>('1.5.1')
+export class Student extends Person implements IShowYourself {
+  private _number: number
+  public course: string
 
-    constructor(ra: number, name: string, gender: Gender, course: string) {
-        super(name, gender)
-        if (!name){
-            throw new ReferenceError('name')
-        }
+  constructor (number: number, name: string, gender: Gender, course: string) {
+    super(name, gender)
 
-        if (!gender){
-            throw new ReferenceError('gender')
-        }
-
-        if (!course){
-            throw new ReferenceError('course')
-        }
-        
-        if (ra == 1234 || ra == 5678 || ra == 9012) {
-            this._ra = ra
-        } else {
-            throw new Error('Formato de RA invalido')
-        }
-        this.course = course
+    if (!name) {
+      throw new ReferenceError('name')
     }
 
-    //Acessors 
-    get ra() {
-        return this._ra
+    if (!gender) {
+      throw new ReferenceError('gender')
     }
 
-    // set ra(value: number) {
-    //     if (value == 1234 || value == 5678 || value == 9012) {
-    //         this.#ra = value
-    //     } else {
-    //         throw new Error('Formato invalido')
-    //     }
-    // }
+    if (!course) {
+      throw new ReferenceError('course')
+    }
 
+    if (number == 1234 || number == 5678 || number == 9012) {
+      this._number = number
+    } else {
+      throw new Error('Formato de RA inválido')
+    }
+
+    this.course = course
+  }
+
+  get number() {
+    return this._number
+  }
+
+  public showYourself () {
+    if (this.gender === Gender.Male) {
+      return `Sou um aluno, meu nome é ${this.name}.`
+    } else {
+      return `Sou uma aluna, meu nome é ${this.name}.`
+    }
+  }
+
+  public showYourselfWithGreeting (greeting: string) {
+    return this.showYourself() + ' ' + greeting
+  }
 }
 
 export default Student

@@ -1,25 +1,38 @@
-{//Generics
-const numero1 = document.querySelector<HTMLInputElement>('#num1')!
-const numero2 = document.querySelector<HTMLInputElement>('#num2')!
-const formulario = document.querySelector<HTMLFormElement>('form')!
+{
+  const campo1 = document.querySelector<HTMLInputElement>('#campo1')!
+  const campo2 = document.querySelector<HTMLInputElement>('#campo2')!
+  const formulario = document.querySelector<HTMLFormElement>('form')!
+  const mensagem = document.querySelector<HTMLParagraphElement>('#mensagem')!
 
+  campo1.focus()
 
-formulario.addEventListener('submit', (event: Event) => {
-    event.preventDefault()
+  formulario.addEventListener('submit', (e: Event) => {
+    e.preventDefault()
 
-    let p = document.querySelector<HTMLParagraphElement>('#mensagem')
+    campo1.className = campo2.className = mensagem.className = ''
 
-    if (!p) {
-        p = document.createElement('p')
-        p.id = 'mensagem'
-        formulario.append(p)
+    let n1 = parseInt(campo1.value)
+    let n2 = parseInt(campo2.value)
+
+    if (isNaN(n1)) {
+      mensagem.innerText = 'O primeiro número foi preenchido incorretamente!'
+      campo1.className = mensagem.className = 'negative'
+      campo1.focus()
+      return
     }
 
-    if (numero1.value && numero2.value) {
-        let soma = Number(numero1.value) + Number(numero2.value)
-        p.innerText = `A soma dos numeros é de ${soma}`
-    } else {
-        p.innerText = `Favor informar os dois numero`
+    if (isNaN(n2)) {
+      mensagem.innerText = 'O segundo número foi preenchido incorretamente!'
+      campo2.className = mensagem.className = 'negative'
+      campo2.focus()
+      return
     }
-})
+
+    const soma = n1 + n2
+    mensagem.innerHTML = `A soma de <b>${n1}</b> + <b>${n2}</b> é <b>${soma}</b>.`
+    mensagem.className = 'positive'
+
+    campo1.value = campo2.value = ''
+    campo1.focus()
+  })
 }

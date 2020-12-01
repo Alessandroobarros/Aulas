@@ -1,118 +1,112 @@
-import Gender from "./entities/Gender.js"
-import Student from "./entities/Student.js"
-
+import Gender from './entities/Gender.js'
+import Student from './entities/Student.js'
+import Animal from './entities/Animal.js'
 
 const number = document.querySelector<HTMLInputElement>('#number')!
 const name = document.querySelector<HTMLInputElement>('#name')!
 const gender = document.querySelector<HTMLSelectElement>('#gender')!
 const course = document.querySelector<HTMLInputElement>('#course')!
-const loading = document.querySelector<SVGAElement>('#loading')!
+const loading = document.querySelector<SVGElement>('#loading')!
 const message = document.querySelector<HTMLParagraphElement>('#message')!
 const form = document.querySelector('form')!
-
+const table = document.querySelector('table')!
 
 const students: Student[] = []
-
 
 showStudents()
 number.focus()
 
-const intervalId = setInterval(() =>{
-    if (document.body.style.background === 'magenta'){
-        document.body.style.background = 'white'
-    }else{
-        document.body.style.background = 'magenta'
-    }
-}, 2000)
+const intervalId = setInterval(() => {
+  if (document.body.style.background === 'rgb(102, 0, 102)') {
+    document.body.style.background = 'rgb(21, 21, 21)'
+  } else {
+    document.body.style.background = 'rgb(102, 0, 102)'
+  }
+}, 1000)
 
 form.addEventListener('submit', (e: Event) => {
-    e.preventDefault()
+  e.preventDefault()
 
-    //TODO: Construir  validações dos campos
+  clearInterval(intervalId)
 
-    clearInterval(intervalId)
+  document.body.style.background = 'rgb(21, 21, 21)'
+  message.innerText = ''
+  table.style.display = 'none'
+  form.style.display = 'none'
+  loading.style.display = 'block'
 
-    loading.style.display = 'block'
+  // TODO: Construir validações dos campos.
 
-    setTimeout(() => {
-        try {
-            const student = new Student(
-                parseInt(number.value, 10),
-                name.value,
-                gender.value === 'f' ? Gender.Female : Gender.Male,
-                course.value
-            )
+  setTimeout(() => {
+    try {
+      const student = new Student(
+        parseInt(number.value, 10),
+        name.value,
+        gender.value === 'f' ? Gender.Female : Gender.Male,
+        course.value
+      )
 
-            students.push(student)
+      students.push(student)
 
-            //Necessidade de serealização
-
-            localStorage.setItem('students', JSON.stringify(students))
-
-            showStudents()
-        } catch (error: any) {
-            console.error(error)
-            message.innerText = "Opa, deu pau."
-            const table = document.querySelector('table')
-            if(table) table.remove()
-        } finally {
-            loading.style.display = 'none'
-        }
-    }, 3000);
+      // Serialização no JS ocorre em forma de JSON
+      localStorage.setItem('students', JSON.stringify(students))
+      showStudents()
+    } catch (error: any) {
+      console.error(error)
+      message.innerText = 'Opa, ocorreu um erro aqui.'
+      message.className = 'negative'
+    } finally {
+      form.style.display = 'flex'
+      loading.style.display = 'none'
+    }
+  }, 3000)
 })
 
-
-
-
-
 function showStudents() {
-    if (localStorage.getItem('students')) {
-        const data = JSON.parse(localStorage.getItem('students')!)
+  if (localStorage.getItem('students')) {
+    const data = JSON.parse(localStorage.getItem('students')!)
 
-        students.splice(0)
+    students.splice(0)
 
-        for (const item of data) {
-            students.push(new Student(
-                item._ra,
-                item.name,
-                item.gender,
-                item.course
-            ))
-        }
+    for (const item of data) {
+      students.push(new Student(
+        item._number,
+        item.name,
+        item.gender,
+        item.course
+      ))
     }
+  }
 
-    let table = document.querySelector('table')
+  let lines = ''
 
-    if (!table) {
-        table = document.createElement('table')
-        document.body.append(table)
-    }
+  for (const student of students) {
+    // Impossível usar tipagem para acessar métodos adicionados por Decorator.
+    // Por isso, a convesão forçada do objeto para any.
+    console.log((student as any).getVersion())
 
-    let lines = ''
+    lines += `
+      <tr>
+        <td>${ (student as IShowYourself).name }</td>
+        <td>${ (student as IShowYourself).showYourself() }</td>
+      </tr>
+    `
+  }
 
-    for (const student of students) {
-        lines += `
-        <tr>
-        <td>${student.ra}</td>
-        <td>${student.name}</td>
-        <td>${student.course}</td>
-        <td>${student.gender}</td>
-        </tr>
-        `
-    }
-
-    table.innerHTML = `
+  table.style.display = 'table'
+  table.innerHTML = `
     <thead>
-        <tr>
-            <th>Ra</th>
-            <th>Nome</th>
-            <th>Curso</th>
-            <th>Sexo</th>
-        </tr>
+      <tr>
+        <th>Nome</th>
+        <th>Auto-Apresentação</th>
+      </tr>
     </thead>
     <tbody>
-     ${lines}
+      ${lines}
     </tbody>
-    `
-
+  `
 }
+
+// Apenas para fins de teste de Decorator, instancinando um Animal.
+const papagaio = new Animal('Currupaco')
+console.log((papagaio as any).getVersion())
